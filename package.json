@@ -1,0 +1,26 @@
+{
+  "name": "ajax-blog-backend",
+  "version": "1.0.0",
+  "description": "The backend of the ajax blog with the practice of a RESTful API that serves data to clients",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chausicle/ajax-blog-backend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chausicle/ajax-blog-backend/issues"
+  },
+  "homepage": "https://github.com/chausicle/ajax-blog-backend#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "morgan": "^1.9.0",
+    "uuid": "^3.2.1"
+  }
+}
