@@ -4,6 +4,7 @@ const express = require("express");
       bodyParser = require("body-parser");
       morgan = require("morgan");
       PORT = process.env.PORT || 3000;
+      path = require("path");
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -11,7 +12,7 @@ app.disable("x-powered-by");
 if (process.env.NODE_ENV !== "test") app.use(morgan("dev"));
 
 // Serve static files
-app.use(express.static("../ajax-blog-fontend"));
+app.use('/', express.static("../ajax-blog-frontend"));
 
 const postPath = require("./src/routes/posts");
 app.use("/posts", postPath);
@@ -27,3 +28,5 @@ app.use((req, res, next) => {
 
 const listener = console.log(`Server start on port ${PORT}`);
 app.listen(PORT, listener);
+
+module.exports = app;
