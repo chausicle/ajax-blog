@@ -36,7 +36,21 @@ const getPostById = (req, res, next) => {
 };
 
 const updatePost = (req, res, next) => {
-  const result = model.updatePost(req.params.id, req.body.title, req.body.content);
+  const result = model.updatePost(req.params.id, req.body);
+
+  if (result.errors) {
+    return next({
+      status: result.status,
+      message: result.message,
+      errors: result.errors
+    });
+  }
+
+  res.status(200).json({ result });
+};
+
+const deletePost = (req, res, next) => {
+  const result = model.deletePost(req.params.id);
 
   if (result.error) {
     return next({
@@ -46,11 +60,7 @@ const updatePost = (req, res, next) => {
     });
   }
 
-  res.status(200).json({ result });
-};
-
-const deletePost = (req, res, next) => {
-
+  res.status(204).json();
 };
 
 module.exports = {

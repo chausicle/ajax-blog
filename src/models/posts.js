@@ -63,10 +63,12 @@ const getPostById = (id) => {
   return post;
 };
 
-const updatePost = (id, title, content) => {
+const updatePost = (id, updatePost) => {
   // read data from posts.json file
   const postArray = JSON.parse(fs.readFileSync(path.join(__dirname, posts, "posts.json"), "utf-8"));
   const errors = [];
+        title = updatePost.title;
+        content = updatePost.content;
 
   const post = postArray.find(post => post.id === id);
 
@@ -98,12 +100,36 @@ const updatePost = (id, title, content) => {
     // write data to posts.json file
     fs.writeFileSync(path.join(__dirname, posts, "posts.json"), JSON.stringify(postArray));
 
-    return savePost;
+    return {
+      id,
+      title,
+      content
+    };
   }
 };
 
-const deletePost = () => {
+const deletePost = (id) => {
+  // read data from posts.json file
+  const postArray = JSON.parse(fs.readFileSync(path.join(__dirname, posts, "posts.json"), "utf-8"));
 
+  const post = postArray.find(post => post.id === id);
+
+  if (!post) {
+    return {
+      status: 404,
+      message: "Not Found",
+      error: `Could not find id ${id}`
+    };
+  } else {
+    // remove post from post array
+    const index = postArray.indexOf(post);
+    postArray.splice(index, 1);
+
+    // write data to posts.json file
+    fs.writeFileSync(path.join(__dirname, posts, "posts.json"), JSON.stringify(postArray));
+
+    return 1;
+  }
 };
 
 module.exports = {
