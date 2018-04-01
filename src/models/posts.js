@@ -2,7 +2,6 @@ const fs = require("fs");
       path = require("path");
       posts = "../../dataPost";
       uuid = require("uuid/v4");
-      postArray = JSON.parse(fs.readFileSync(path.join(__dirname, posts, "posts.json"), "utf-8"));
 
 const createPost = (newPost) => {
   const title = newPost.title;
@@ -22,6 +21,9 @@ const createPost = (newPost) => {
       errors
     };
   } else {
+    // read data from posts.json file
+    const postArray = JSON.parse(fs.readFileSync(path.join(__dirname, posts, "posts.json"), "utf-8"));
+
     const savePost = {
       id: uuid(),
       title,
@@ -38,11 +40,31 @@ const createPost = (newPost) => {
 };
 
 const getAllPosts = () => {
+  // read data from posts.json file
+  const postArray = JSON.parse(fs.readFileSync(path.join(__dirname, posts, "posts.json"), "utf-8"));
 
+  return postArray;
 };
 
-const getPostById = () => {
+const getPostById = (id) => {
+  // read data from posts.json file
+  const postArray = JSON.parse(fs.readFileSync(path.join(__dirname, posts, "posts.json"), "utf-8"));
 
+  console.log(postArray);
+
+  const post = postArray.find(post => post.id === id);
+
+  console.log(post);
+
+  if (!post) {
+    return {
+      status: 404,
+      message: "Not Found",
+      error: `Could not find id ${id}`
+    };
+  }
+
+  return post;
 };
 
 const updatePost = () => {

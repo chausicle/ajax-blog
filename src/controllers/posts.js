@@ -7,7 +7,7 @@ const createPost = (req, res, next) => {
     return next({
       status: result.status,
       message: result.message,
-      errors: reuslt.errors
+      errors: result.errors
     });
   }
 
@@ -15,11 +15,24 @@ const createPost = (req, res, next) => {
 }
 
 const getAllPosts = (req, res, next) => {
+  const result = model.getAllPosts();
 
+  res.status(200).json({ result });
 }
 
 const getPostById = (req, res, next) => {
+  console.log(req.params.id);
+  const result = model.getPostById(req.params.id);
 
+  if (result.error) {
+    return next({
+      status: result.status,
+      message:result.message,
+      error: result.error
+    });
+  }
+
+  res.status(200).json({ result });
 }
 
 const updatePost = (req, res, next) => {
