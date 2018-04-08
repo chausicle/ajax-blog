@@ -22,7 +22,7 @@ const createPost = (newPost) => {
     };
   } else {
     // read data from posts.json file
-    const postArray = JSON.parse(fs.readFileSync(path.join(__dirname, posts, "posts.json"), "utf-8"));
+    const postArray = readFile();
 
     const savePost = {
       id: uuid(),
@@ -33,7 +33,7 @@ const createPost = (newPost) => {
     postArray.push(savePost);
 
     // write data to posts.json file
-    fs.writeFileSync(path.join(__dirname, posts, "posts.json"), JSON.stringify(postArray));
+    writeFile(postArray);
 
     return savePost;
   }
@@ -41,14 +41,14 @@ const createPost = (newPost) => {
 
 const getAllPosts = () => {
   // read data from posts.json file
-  const postArray = JSON.parse(fs.readFileSync(path.join(__dirname, posts, "posts.json"), "utf-8"));
+  const postArray = readFile();
 
   return postArray;
 };
 
 const getPostById = (id) => {
   // read data from posts.json file
-  const postArray = JSON.parse(fs.readFileSync(path.join(__dirname, posts, "posts.json"), "utf-8"));
+  const postArray = readFile();
 
   const post = postArray.find(post => post.id === id);
 
@@ -56,7 +56,7 @@ const getPostById = (id) => {
     return {
       status: 404,
       message: "Not Found",
-      error: `Could not find id ${id}`
+      errors: `Could not find id ${id}`
     };
   }
 
@@ -65,7 +65,7 @@ const getPostById = (id) => {
 
 const updatePost = (id, updatePost) => {
   // read data from posts.json file
-  const postArray = JSON.parse(fs.readFileSync(path.join(__dirname, posts, "posts.json"), "utf-8"));
+  const postArray = readFile();
   const errors = [];
         title = updatePost.title;
         content = updatePost.content;
@@ -76,7 +76,7 @@ const updatePost = (id, updatePost) => {
     return {
       status: 404,
       message: "Not Found",
-      error: `Could not find id ${id}`
+      errors: `Could not find id ${id}`
     };
   }
   // checks if the title or content is empty
@@ -98,7 +98,7 @@ const updatePost = (id, updatePost) => {
     postArray[index].content = content;
 
     // write data to posts.json file
-    fs.writeFileSync(path.join(__dirname, posts, "posts.json"), JSON.stringify(postArray));
+    writeFile(postArray);
 
     return {
       id,
@@ -110,7 +110,7 @@ const updatePost = (id, updatePost) => {
 
 const deletePost = (id) => {
   // read data from posts.json file
-  const postArray = JSON.parse(fs.readFileSync(path.join(__dirname, posts, "posts.json"), "utf-8"));
+  const postArray = readFile();
 
   const post = postArray.find(post => post.id === id);
 
@@ -118,7 +118,7 @@ const deletePost = (id) => {
     return {
       status: 404,
       message: "Not Found",
-      error: `Could not find id ${id}`
+      errors: `Could not find id ${id}`
     };
   } else {
     // remove post from post array
@@ -126,10 +126,18 @@ const deletePost = (id) => {
     postArray.splice(index, 1);
 
     // write data to posts.json file
-    fs.writeFileSync(path.join(__dirname, posts, "posts.json"), JSON.stringify(postArray));
+    writeFile(postArray);
 
     return 1;
   }
+};
+
+const readFile = () => {
+  return JSON.parse(fs.readFileSync(path.join(__dirname, posts, "posts.json"), "utf-8"));
+};
+
+const writeFile = (postArray) => {
+  fs.writeFileSync(path.join(__dirname, posts, "posts.json"), JSON.stringify(postArray));
 };
 
 module.exports = {
