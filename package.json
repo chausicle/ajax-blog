@@ -4,7 +4,8 @@
   "description": "The backend of the ajax blog with the practice of a RESTful API that serves data to clients",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
